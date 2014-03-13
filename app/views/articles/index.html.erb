@@ -1,0 +1,22 @@
+<%= grid(@articles_grid, show_filters: :when_filtered) do |g|
+
+  g.column name: :id, filter: false do |article|
+    article.id
+  end
+  
+  g.column name: :标题, attribute: 'title' do |article|
+    article.title
+  end
+  
+  g.column name: :备注 do |article|
+    article.content
+  end
+  
+  g.column name: :排序 do |article|
+    article.position
+  end
+  
+  g.column do |article|
+    link_to("编辑", edit_article_path(article))
+  end
+end -%>
