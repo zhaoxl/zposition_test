@@ -16,6 +16,7 @@ module ActiveRecord
         
         class_eval <<-EOV
         include ActiveRecord::ZPosition::InstanceMethods
+        #default_scope order('#{configuration[:column]} ASC')
         
         def configuration
           #{configuration}
@@ -58,8 +59,8 @@ module ActiveRecord
             if configuration[:debug]
               logger.info "ZPosition--------------- current move_to_up--------------- exchange position"
             end
-            self.update_attribute(position_column, prev_position)
             prev_item.update_attribute(position_column, current_position)
+            self.update_attribute(position_column, prev_position)
           else
             if configuration[:debug]
               logger.info "ZPosition--------------- current move_to_up--------------- update position reduce"
@@ -86,8 +87,8 @@ module ActiveRecord
             if configuration[:debug]
               logger.info "ZPosition--------------- current move_to_up--------------- exchange position"
             end
-            self.update_attribute(position_column, next_position)
             next_item.update_attribute(position_column, current_position)
+            self.update_attribute(position_column, next_position)
           else
             if configuration[:debug]
               logger.info "ZPosition--------------- current move_to_up--------------- update position increase"
@@ -160,14 +161,14 @@ module ActiveRecord
         if configuration[:debug]
           logger.info "ZPosition--------------- current first_item?"
         end
-        self.class.exists?("#{position_column} <= :position", {position: current_position})
+        self.class.exists?("#{position_column} <= #{current_position}")
       end
       
       def last_item?
         if configuration[:debug]
           logger.info "ZPosition--------------- current in_list?"
         end
-        self.class.exists?("#{position_column} >= :position", {position: current_position})
+        self.class.exists?("#{position_column} >= #{current_position}")
       end
     end
     
