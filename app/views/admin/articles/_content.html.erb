@@ -2,6 +2,7 @@
   <%= f.inputs :name => "Basic" do %>
     <%= f.input :title%>
     <%= f.input :position%>
+    <%= render partial: "admin/articles/files", as: :sdf%>
     <%= f.input :content, :as => :kindeditor%>
     <%= f.actions %>
   <%end%>
