@@ -9,5 +9,5 @@ class AdminUser < ActiveRecord::Base
   # attr_accessible :title, :body
   
   #临时存放用户上传的图片，对象呗保存时才改变为对象的图片，可以避免文件冗余
-  has_many :temp_upload_images, as: :item, dependent: :destroy
+  has_many :temp_upload_images, class_name: :Image, as: :item, dependent: :destroy
 end

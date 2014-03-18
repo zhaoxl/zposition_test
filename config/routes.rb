@@ -59,5 +59,6 @@ Test0224::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
   match "/admin/admin_user/ajax_upload_temp_image" => "admin/admin_users#ajax_upload_temp_image", via: :post
+  match "/admin/admin_user/ajax_destroy_temp_image" => "admin/admin_users#ajax_destroy_temp_image", via: :post
   resources :articles
 end

@@ -25,8 +25,17 @@ ActiveAdmin.register AdminUser do
     #上传图片到用户临时上传文件夹
     def ajax_upload_temp_image
       render(json: ajax_frame do |result|
-        file = current_admin_user.temp_upload_images.create(params[:file])
-        result = {status: "ok", id: file.id, name: file.image_file_file_name, url: file.url(:thumb), desc: file.image_file_file_name}
+        Image.transaction do
+          img = current_admin_user.temp_upload_images.create(image_file: params[:file])
+          result = {status: 1, id: img.id, name: img.image_file_file_name, url: img.image_file(:thumb), desc: ""}
+        end
+      end.to_json)
+    end
+    
+    #删除用户的临时上传图片
+    def ajax_destroy_temp_image
+      render(json: ajax_frame do |result|
+        current_admin_user.temp_upload_images.destroy(params[:id])
       end.to_json)
     end
   end

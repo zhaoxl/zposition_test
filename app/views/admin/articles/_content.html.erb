@@ -1,7 +1,7 @@
 <%= semantic_form_for @article, url: (@article && !@article.new_record? ? admin_article_path(@article) : admin_articles_path) do |f| %>
   <%= f.inputs :name => "Basic" do %>
     <%= f.input :title%>
-    <%= f.input :position%>
+    <%= f.input :position unless @article.new_record?%>
     <%= render partial: "admin/articles/files", as: :sdf%>
     <%= f.input :content, :as => :kindeditor%>
     <%= f.actions %>
