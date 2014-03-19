@@ -5,7 +5,7 @@ class Image < ActiveRecord::Base
                                               :thumb => "100x100>",
                                               :original => {:geometry => '550x400>',  
                                                             :watermark_path => "#{Rails.root}/public/watermark.png",#水印图片所在位置  
-                                                            :position => 'Center'
+                                                            :position => 'SouthEast'
                                                           }
                                               }, 
                                               :default_url => "/images/:style/missing.png"
