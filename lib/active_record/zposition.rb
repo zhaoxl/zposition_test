@@ -6,12 +6,13 @@ module ActiveRecord
     
     
     module ClassMethods
+      
       def z_position(options = {})
-        configuration = { :column => "position", :scope => "1 = 1", debug: false }
+        configuration = { column: "position", scope: "1 = 1", debug: false, acts_as_nested_set: false }
         configuration.update(options) if options.is_a?(Hash)
 
         if configuration[:debug]
-          logger.info "ZPosition--------------- current z_position"
+          logger.info "ZPosition--------------- use the z_position plugin"
         end
         
         class_eval <<-EOV
@@ -120,7 +121,7 @@ module ActiveRecord
         if configuration[:debug]
           logger.info "ZPosition--------------- current top_position"
         end
-        if item = self.class.order("#{position_column} ASC").first
+        if item = self.class.where(find_condition).order("#{position_column} ASC").first
           return item[position_column].to_i
         end
         return 0
@@ -130,21 +131,21 @@ module ActiveRecord
         if configuration[:debug]
           logger.info "ZPosition--------------- current elder_sister_item?"
         end
-        self.class.where("#{position_column} < :position", {position: current_position}).order("#{position_column} DESC").first
+        self.class.where(find_condition("#{position_column} < :position", {position: current_position})).order("#{position_column} DESC").first
       end
       
       def younger_sister_item
         if configuration[:debug]
           logger.info "ZPosition--------------- current younger_sister_item?"
         end
-        self.class.where("#{position_column} > :position", {position: current_position}).order("#{position_column} ASC").first
+        self.class.where(find_condition("#{position_column} > :position", {position: current_position})).order("#{position_column} ASC").first
       end
       
       def bottom_position
         if configuration[:debug]
           logger.info "ZPosition--------------- current bottom_position"
         end
-        if item = self.class.order("#{position_column} DESC").first
+        if item = self.class.where(find_condition).order("#{position_column} DESC").first
           return item[position_column].to_i
         end
         return 0
@@ -161,15 +162,24 @@ module ActiveRecord
         if configuration[:debug]
           logger.info "ZPosition--------------- current first_item?"
         end
-        self.class.exists?("#{position_column} <= #{current_position}")
+        self.class.exists?(find_condition("#{position_column} <= #{current_position}"))
       end
       
       def last_item?
         if configuration[:debug]
           logger.info "ZPosition--------------- current in_list?"
         end
-        self.class.exists?("#{position_column} >= #{current_position}")
+        self.class.exists?(find_condition("#{position_column} >= #{current_position}"))
       end
+    end
+    
+    def find_condition(where_sql = nil)
+      if configuration[:debug]
+        logger.info "ZPosition--------------- find_condition"
+      end
+      condition = configuration[:scope]
+      condition += " AND depth=#{self.depth}" if configuration[:scope]
+      condition += " AND #{where_sql}" if where_sql.present?
     end
     
     

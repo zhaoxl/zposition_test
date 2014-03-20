@@ -47,3 +47,4 @@ gem 'rails_kindeditor'
 gem 'pry', '0.9.12.2'
 gem 'pry-nav', '0.2.3'
 gem "paperclip", "~> 4.1"
+gem 'awesome_nested_set', '2.1.6'
