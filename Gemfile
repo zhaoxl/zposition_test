@@ -48,3 +48,7 @@ gem 'pry', '0.9.12.2'
 gem 'pry-nav', '0.2.3'
 gem "paperclip", "~> 4.1"
 gem 'awesome_nested_set', '2.1.6'
+gem 'capistrano', '~> 3.2.0'
+gem 'capistrano-ext'
+gem 'capistrano-bundler'
+gem 'capistrano-rvm'

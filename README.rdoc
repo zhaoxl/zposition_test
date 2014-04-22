@@ -1,7 +1,7 @@
 cms后台功能实现
 
   后台主框架使用activeadmin+devise
-  内容排序使用自己写的zposition插件，思路类似acts_as_list，增加了速度去掉了没用的方法，正在完善支持aawesome_nested_set的多级分类+排序功能
+  内容排序使用自己写的zposition插件，思路类似acts_as_list，增加了速度去掉了没用的方法，正在完善支持awesome_nested_set的多级分类+排序功能
   图片上传使用了淘宝的kissy uploader插件
   图片管理使用paperclip图片插件，水印与imagemagick不兼容还在解决
   富文本编辑器使用rails_kindeditor
