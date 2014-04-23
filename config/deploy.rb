@@ -73,5 +73,15 @@ namespace :deploy do
     end
   end
   
+  task :start, :roles => :app do
+    run "cd #{current_path} && bin/unicorn_rails -E production -l 8000 -D -c #{current_path}/config/unicorn.rb"
+  end
 
+  task :stop, :roles => :app do
+    run "kill -QUIT `cat #{current_path}/tmp/pids/unicorn.pid`"
+  end
+
+  task :restart, :roles => :app do
+    run "kill -USR2 `cat #{current_path}/tmp/pids/unicorn.pid`"
+  end
 end
