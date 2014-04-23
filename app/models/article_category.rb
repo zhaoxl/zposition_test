@@ -1,3 +1,4 @@
+#Encoding: utf-8
 class ArticleCategory < ActiveRecord::Base
   attr_accessible :name
   acts_as_nested_set

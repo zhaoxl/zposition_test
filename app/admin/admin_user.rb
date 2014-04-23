@@ -1,3 +1,4 @@
+#Encoding: utf-8
 ActiveAdmin.register AdminUser do
   
   index do

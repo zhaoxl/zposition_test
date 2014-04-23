@@ -1,3 +1,4 @@
+#Encoding: utf-8
 ActiveAdmin.register Article do
   config.sort_order = "position_asc"
   config.batch_actions = false

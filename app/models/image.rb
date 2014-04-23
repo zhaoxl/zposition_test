@@ -1,3 +1,4 @@
+#Encoding: utf-8
 require 'paperclip_processors/watermark'
 class Image < ActiveRecord::Base
   attr_accessible :item_id, :item_type, :image_file

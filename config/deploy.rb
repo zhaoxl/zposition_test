@@ -36,10 +36,16 @@ set :deploy_to, '/opt/ruby_work/zposition_test'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 set :default_stage, "development"
-set :bundle_without, nil
-set :bundle_binstubs, nil
-set :bundle_path, -> { shared_path.join('vendor/bundle') }
+
 set :rvm_ruby_version, "1.9.3@test_0224"
+
+set :bundle_gemfile, -> { release_path.join('Gemfile') }
+set :bundle_dir, -> { shared_path.join('bundle') }
+set :bundle_flags, ''
+set :bundle_without, %w{test}.join(' ')
+set :bundle_binstubs, -> { shared_path.join('bin') }
+set :bundle_roles, :all
+
 
 set :log_level, :info
 
@@ -47,6 +53,7 @@ set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
 
 namespace :deploy do
+  
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -65,5 +72,6 @@ namespace :deploy do
       # end
     end
   end
+  
 
 end
